@@ -65,25 +65,25 @@
         - python3-minimal
         - redis-server
 
-- name: create "{{xo_user}}:{{xo_group}}" user & group
+- name: create "{{  xo_user  }}:{{  xo_group  }}" user & group
   become: true
   become_user: root
   block:
-    - name: Ensure group {{xo_group}} exists with correct gid
+    - name: Ensure group {{  xo_group  }} exists with correct gid
       ansible.builtin.group:
-        name: "{{xo_group}}"
+        name: "{{  xo_group  }}"
         state: present
         gid: 777
 
-    - name: Add the user {{xo_user}} with a specific uid and a primary group of {{xo_group}}
+    - name: Add the user {{  xo_user  }} with a specific uid and a primary group of {{  xo_group  }}
       ansible.builtin.user:
         system: true
-        name: "{{xo_user}}"
+        name: "{{  xo_user  }}"
         comment: xen-orchestra
         createhome: true
-        home: "{{xo_path}}"
+        home: "{{  xo_path  }}"
         uid: 777
-        group: "{{xo_group}}"
+        group: "{{  xo_group  }}"
 
     - name: visudo xen-orchestra
       community.general.sudoers:
@@ -96,41 +96,41 @@
 
     - name: Create xen-orchestra directory if it does not exist
       ansible.builtin.file:
-        path: "{{item}}"
+        path: "{{  item  }}"
         state: directory
         mode: "0750"
-        owner: "{{xo_user}}"
-        group: "{{xo_group}}"
+        owner: "{{  xo_user  }}"
+        group: "{{  xo_group  }}"
       loop:
         - /etc/xo-server
         - /var/lib/xo-server
 
 - name: build xen-orchestra
   become: true
-  become_user: "{{xo_user}}"
+  become_user: "{{  xo_user  }}"
   block:
     - name: checkout xen-orchestra repository
       ansible.builtin.git:
-        repo: "{{xo_server}}"
-        version: "{{xo_branch}}"
-        dest: "{{xo_repo}}"
+        repo: "{{  xo_server  }}"
+        version: "{{  xo_branch  }}"
+        dest: "{{  xo_repo  }}"
 
     - name: yarn install
       community.general.yarn:
-        path: "{{xo_repo}}"
+        path: "{{  xo_repo  }}"
         state: present
 
     - name: yarn build
       ansible.builtin.command: yarn build
       args:
-        chdir: "{{xo_repo}}"
+        chdir: "{{  xo_repo  }}"
 
     - name: create config
       ansible.builtin.template:
         src: config.toml.j2
         dest: /etc/xo-server/config.toml
-        owner: "{{xo_user}}"
-        group: "{{xo_group}}"
+        owner: "{{  xo_user  }}"
+        group: "{{  xo_group  }}"
         mode: "0640"
 
 - name: create systemd service
