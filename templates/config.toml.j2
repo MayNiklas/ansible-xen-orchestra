@@ -94,7 +94,14 @@ group = '{{ xo_group }}'
 # Port on which the server is listening on.
 #
 # Default: undefined
+{% if xo_user is not defined %}
 port = 80
+{% endif %}
+
+{% if xo_user is defined %}
+port = {{ xo_port }}
+{% endif %}
+
 
 # Instead of `host` and `port` a path to a UNIX socket may be specified
 # (overrides `host` and `port`).

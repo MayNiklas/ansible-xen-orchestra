@@ -8,6 +8,7 @@ xo_repo: "{{xo_path}}/xen-orchestra"
 
 xo_user: xen-orchestra
 xo_group: xen-orchestra
+xo_port: 8080
 
 xo_branch: master
 xo_server: https://github.com/vatesfr/xen-orchestra

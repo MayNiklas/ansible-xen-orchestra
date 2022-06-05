@@ -7,5 +7,7 @@ WorkingDirectory={{xo_repo}}/packages/xo-server/
 ExecStart=/usr/bin/node dist/cli.mjs
 Restart=always
 SyslogIdentifier=xo-server
+User={{xo_user}}
+Group={{xo_group}}
 [Install]
 WantedBy=multi-user.target
