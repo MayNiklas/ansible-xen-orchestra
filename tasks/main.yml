@@ -80,7 +80,8 @@
         system: true
         name: "{{xo_user}}"
         comment: xen-orchestra
-        createhome: false
+        createhome: true
+        home: "{{xo_path}}"
         uid: 777
         group: "{{xo_group}}"
 
@@ -94,7 +95,6 @@
       loop:
         - /etc/xo-server
         - /var/lib/xo-server
-        - "{{xo_path}}"
 
 - name: build xen-orchestra
   become: true
@@ -104,17 +104,17 @@
       ansible.builtin.git:
         repo: "{{xo_server}}"
         version: "{{xo_branch}}"
-        dest: "{{xo_path}}"
+        dest: "{{xo_repo}}"
 
     - name: yarn install
       community.general.yarn:
-        path: "{{xo_path}}"
+        path: "{{xo_repo}}"
         state: present
 
     - name: yarn build
       ansible.builtin.command: yarn build
       args:
-        chdir: "{{xo_path}}"
+        chdir: "{{xo_repo}}"
 
     - name: create config
       ansible.builtin.template:
@@ -124,7 +124,17 @@
         group: "{{xo_group}}"
         mode: "0640"
 
-- name: create service
-  ansible.builtin.template:
-    src: templates/orchestra.service.j2
-    dest: /lib/systemd/system/orchestra.service
+- name: create systemd service
+  become: true
+  block:
+    - name: create service file
+      ansible.builtin.template:
+        src: xen-orchestra.service.j2
+        dest: /lib/systemd/system/xen-orchestra.service
+
+    - name: relaod systemd daemon and enable & restart service
+      ansible.builtin.systemd:
+        daemon_reload: true
+        enabled: true
+        state: restarted
+        name: xen-orchestra

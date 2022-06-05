@@ -3,7 +3,8 @@
 
 nodejs_version: 16.x
 
-xo_path: /usr/local/xen-orchestra
+xo_path: /usr/local/xo
+xo_repo: "{{xo_path}}/xen-orchestra"
 
 xo_user: xen-orchestra
 xo_group: xen-orchestra
