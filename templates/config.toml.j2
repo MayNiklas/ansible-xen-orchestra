@@ -186,7 +186,9 @@ port = {{ xo_port }}
 # Use sudo for mount with non-root user
 #
 # Default: false
-#useSudo = false
+{% if xo_sudo %}
+useSudo = true
+{% endif %}
 
 #=====================================================================
 

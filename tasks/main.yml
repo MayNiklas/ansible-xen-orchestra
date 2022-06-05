@@ -75,7 +75,7 @@
         state: present
         gid: 777
 
-    - name: Add the user "{{xo_user}}" with a specific uid and a primary group of 'admin'
+    - name: Add the user {{xo_user}} with a specific uid and a primary group of {{xo_group}}
       ansible.builtin.user:
         system: true
         name: "{{xo_user}}"
@@ -84,6 +84,15 @@
         home: "{{xo_path}}"
         uid: 777
         group: "{{xo_group}}"
+
+    - name: visudo xen-orchestra
+      community.general.sudoers:
+        name: xen-orchestra
+        state: present
+        user: "{{ xo_user }}"
+        commands: /bin/mount, /bin/umount
+        nopassword: true
+      when: xo_sudo
 
     - name: Create xen-orchestra directory if it does not exist
       ansible.builtin.file:

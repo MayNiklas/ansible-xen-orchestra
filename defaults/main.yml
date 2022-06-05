@@ -8,6 +8,7 @@ xo_repo: "{{xo_path}}/xen-orchestra"
 
 xo_user: xen-orchestra
 xo_group: xen-orchestra
+xo_sudo: true
 xo_port: 8080
 
 xo_branch: master
