@@ -94,8 +94,6 @@
       loop:
         - /etc/xo-server
         - /var/lib/xo-server
-        - /root/.config
-        - /root/.config/xo-server
         - "{{xo_path}}"
 
 - name: build xen-orchestra
