@@ -34,6 +34,10 @@
 # Default: undefined
 #user = 'nobody'
 
+{% if xo_user is defined %}
+user = '{{ xo_user }}'
+{% endif %}
+
 # Group to run XO-Server as.
 #
 # Note: The group can be specified using either its name or its numeric
@@ -41,6 +45,10 @@
 #
 # Default: undefined
 # group = 'nogroup'
+
+{% if xo_group is defined %}
+group = '{{ xo_group }}'
+{% endif %}
 
 #=====================================================================
 

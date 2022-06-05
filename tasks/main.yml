@@ -94,6 +94,8 @@
       loop:
         - /etc/xo-server
         - /var/lib/xo-server
+        - /root/.config
+        - /root/.config/xo-server
         - "{{xo_path}}"
 
 - name: build xen-orchestra
@@ -115,3 +117,16 @@
       ansible.builtin.command: yarn build
       args:
         chdir: "{{xo_path}}"
+
+    - name: create config
+      ansible.builtin.template:
+        src: config.toml.j2
+        dest: /etc/xo-server/config.toml
+        owner: "{{xo_user}}"
+        group: "{{xo_group}}"
+        mode: "0640"
+
+- name: create service
+  ansible.builtin.template:
+    src: templates/orchestra.service.j2
+    dest: /lib/systemd/system/orchestra.service
