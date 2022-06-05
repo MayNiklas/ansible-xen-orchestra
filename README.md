@@ -1,17 +1,29 @@
-Role Name
+install xen-orchestra via ansible
 =========
 
-A brief description of the role goes here.
+This role installs xen-orchestra on a Debian or Ubuntu server.
+The software is getting build from source. To understand the implications, please read: [xen-orchestra from source](https://xen-orchestra.com/docs/installation.html#from-the-sources)
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Tested on:
+- Debian 10
+- Debian 11
+- Ubuntu 20.04
+- Ubuntu 22.04
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+| variable        | description                                    | default                                  |
+|-----------------|------------------------------------------------|------------------------------------------|
+| nodejs_version: | nodejs version to install                      | 16.x                                     |
+| xo_path:        | path xen-orchestra gets cloned to / build from | /usr/local/xen-orchestra                 |
+| xo_user:        | user under which xen-orchestra runs            | xen-orchestra                            |
+| xo_group:       | group under which xen-orchestra runs           | xen-orchestra                            |
+| xo_branch:      | branch to build from                           | master                                   |
+| xo_server:      | git repository                                 | https://github.com/vatesfr/xen-orchestra |
 
 Dependencies
 ------------
