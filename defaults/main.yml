@@ -1,2 +1,12 @@
 ---
 # defaults file for xen-orchestra
+
+nodejs_version: 16.x
+
+xo_path: /usr/local/xen-orchestra
+
+xo_user: xen-orchestra
+xo_group: xen-orchestra
+
+xo_branch: master
+xo_server: https://github.com/vatesfr/xen-orchestra
